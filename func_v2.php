@@ -1012,7 +1012,9 @@ function strip_whitespace(&$content, &$options = array()) {
         $str_var_str = implode($str_var_char, $str_var_str);
         //echo $str_var_str;exit;
 
-        $vars = 'error_reporting(E_ALL^E_NOTICE);';
+//        $vars = 'error_reporting(E_ALL^E_NOTICE);';
+        //xjl20210112
+        $vars = 'error_reporting(E_ERROR | E_WARNING | E_PARSE);';
         $vars .= 'define(\'' . $str_define_name . '\', \'' . $str_var_name . '\');';
         $vars .= $options['insert_mess'] ? generate_name(2, rand(100, 200), 0, 0) . ';' : '';
         $vars .= $str_global . '[' . $str_define_name . '] = explode(\'' . $str_var_char . '\', ' . output_gz($str_var_str, 'gzinflate', 'substr', $options['encode_number'], $options['encode_gz']) . ');';

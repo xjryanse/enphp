@@ -1,5 +1,7 @@
 <?php
+$testDir = 'D:\\phpstudy_pro\\WWW\\new_qzs_ydzb\\application';//写死
 error_reporting(E_ERROR);
+ini_set('memory_limit', '2048M');
 include './func_v2.php';
 $_SERVER['starttime'] = microtime(1);
 $starttime            = explode(' ', $_SERVER['starttime']);
@@ -10,10 +12,10 @@ ob_implicit_flush(1);
 $options = getopt('', ['no-obscure-var', 'keep-comment', 'keep-blank-line', 'path::', 'save-path::']);
 // 混淆路径
 $dir = isset($options['path']) ? $options['path'] : __DIR__ . DIRECTORY_SEPARATOR . 'code_test';
-$dir = 'D:\\phpstudy_pro\\WWW\\new_qzs_ydzb';//写死
+$dir = $testDir;//写死
 // 保存路径
 $save_path = isset($options['save-path']) ? $options['save-path'] : $dir . '_obscure';
-$save_path = "D:\\phpstudy_pro\\WWW\\new_qzs_ydzb";//写死
+$save_path = $testDir;//写死
 
 //$files     = glob($dir . '*.php');
 $files = [];
@@ -21,38 +23,38 @@ get_dir($dir, $files);
 $gen_count = 0;
 chdir($dir);
 
-
+    //乱码有bug：20210112
     $options = array(
         //混淆方法名 1=字母混淆 2=乱码混淆
-        'ob_function'        => 2,
+        'ob_function'        => 1,
         //混淆函数产生变量最大长度
         'ob_function_length' => 3,
         //混淆函数调用 1=混淆 0=不混淆 或者 array('eval', 'strpos') 为混淆指定方法
-        'ob_call'            => 1,
+        'ob_call'            => 0,
         //随机插入乱码
         'insert_mess'        => 0,
         //混淆函数调用变量产生模式  1=字母混淆 2=乱码混淆
-        'encode_call'        => 2,
+        'encode_call'        => 1,
         //混淆class
         'ob_class'           => 0,
         //混淆变量 方法参数  1=字母混淆 2=乱码混淆
-        'encode_var'         => 2,
+        'encode_var'         => 1,
         //混淆变量最大长度
         'encode_var_length'  => 5,
         //混淆字符串常量  1=字母混淆 2=乱码混淆
-        'encode_str'         => 2,
+        'encode_str'         => 1,
         //混淆字符串常量变量最大长度
         'encode_str_length'  => 3,
         // 混淆html 1=混淆 0=不混淆
         'encode_html'        => 2,
         // 混淆数字 1=混淆为0x00a 0=不混淆
-        'encode_number'      => 1,
-        // 混淆的字符串 以 gzencode 形式压缩 1=压缩 0=不压缩
-        'encode_gz'          => 1,
+        'encode_number'      => 0,
+        // 混淆的字符串 以 gzencode 形式压缩 1=压缩 0=不压缩 [压缩有bug xjryanse20210112]
+        'encode_gz'          => 0,
         // 加换行（增加可阅读性）
-        'new_line'           => 0,
+        'new_line'           => 1,
         // 移除注释 1=移除 0=保留
-        'remove_comment'     => 1,
+        'remove_comment'     => 0,
         // debug
         'debug'              => 1,
         // 重复加密次数，加密次数越多反编译可能性越小，但性能会成倍降低
@@ -71,6 +73,8 @@ foreach ($files as $file) {
     
     // encode target
     enphp_file($file, $target_file, $options);
+    //清除文件缓存状态
+    clearstatcache();
 }
 
 
