@@ -48,13 +48,13 @@ chdir($dir);
         // 混淆html 1=混淆 0=不混淆
         'encode_html'        => 2,
         // 混淆数字 1=混淆为0x00a 0=不混淆
-        'encode_number'      => 0,
+        'encode_number'      => 1,
         // 混淆的字符串 以 gzencode 形式压缩 1=压缩 0=不压缩 [压缩有bug xjryanse20210112]
         'encode_gz'          => 0,
         // 加换行（增加可阅读性）
-        'new_line'           => 1,
+        'new_line'           => 0,
         // 移除注释 1=移除 0=保留
-        'remove_comment'     => 0,
+        'remove_comment'     => 1,
         // debug
         'debug'              => 1,
         // 重复加密次数，加密次数越多反编译可能性越小，但性能会成倍降低
