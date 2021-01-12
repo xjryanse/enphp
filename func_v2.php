@@ -11,7 +11,7 @@ $_SERVER['time']      = $starttime[1];
  *
  * @return string
  */
-function enphp($content, $options = array()) {
+function enphp(&$content, &$options = array()) {
     $deep            = max(1, isset($options['deep']) ? (int)$options['deep'] : 1);
     $deep            = min($deep, 10);
     $options['deep'] = max(1, min($deep, 1));
@@ -30,11 +30,14 @@ function enphp($content, $options = array()) {
  *
  * @return string
  */
-function enphp_file($file, $target_file, $options = array()) {
+function enphp_file(&$file, &$target_file, &$options = array()) {
     $content = file_get_contents($file);
     check_bom($content);
     $content = enphp($content, $options);
     if ($target_file) {
+//        $file_pointer = fopen( $target_file ,"a+");        
+//        fwrite($file_pointer,$content);
+//        fclose($file_pointer);      
         file_put_contents($target_file, $content);
     }
     return $content;
@@ -48,7 +51,7 @@ function enphp_file($file, $target_file, $options = array()) {
  *
  * @return string
  */
-function strip_whitespace($content, $options = array()) {
+function strip_whitespace(&$content, &$options = array()) {
 
     format_code($content);
     $list                 = token_get_all($content);
