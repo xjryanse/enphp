@@ -6,15 +6,28 @@ $starttime            = explode(' ', $_SERVER['starttime']);
 $_SERVER['time']      = $starttime[1];
 
 ob_implicit_flush(1);
-$dir = __DIR__ . '/code_test/';
-mkdir(__DIR__ . '/encoded/');
-$files     = glob($dir . '*.php');
+//$dir = __DIR__ . '/code_test/';
+$options = getopt('', ['no-obscure-var', 'keep-comment', 'keep-blank-line', 'path::', 'save-path::']);
+// 混淆路径
+$dir = isset($options['path']) ? $options['path'] : __DIR__ . DIRECTORY_SEPARATOR . 'code_test';
+$dir = '';//写死
+// 保存路径
+$save_path = isset($options['save-path']) ? $options['save-path'] : $dir . '_obscure';
+$save_path = "";//写死
+
+mkdir($save_path);
+//$files     = glob($dir . '*.php');
+$files = [];
+get_dir($dir, $files);
 $gen_count = 0;
 chdir($dir);
+
 foreach ($files as $file) {
     echo "\r\n", str_repeat("===", 5), "\r\n\r\n";
     $target_file = $file;
-    $target_file = str_replace('/code_test/', '/encoded/', $target_file);
+    // 替换路径
+    $target_file = str_replace($dir, $save_path, $file);
+    
     $options = array(
         //混淆方法名 1=字母混淆 2=乱码混淆
         'ob_function'        => 2,
@@ -94,4 +107,43 @@ foreach ($files as $file) {
     }
     */
 }
+
+
+/**
+ * 递归获取指定目录下的所有文件
+ *
+ * @param $path
+ * @param &$file
+ * @param $remove
+ * @param $type
+ * @return void
+ * @author sunshine
+ */
+function get_dir($path, & $file, $remove = [], $type = ['php'])
+{
+    if (!file_exists($path)) return;
+    if (is_file($path)) {
+        if (!in_array($path, $remove) && ($type != null && in_array(get_file_ext($path), $type))) array_push($file, $path);
+    } else {
+        $handle = opendir($path);
+        while (($f = readdir($handle)) != '') {
+            if ($f != '.' && $f != '..' && $f != '' && $f != '.svn') get_dir($path . '/' . $f, $file, $remove, $type);
+        }
+        closedir($handle);
+    }
+}
+
+/**
+ * 获取文件后缀名
+ *
+ * @param string $file
+ * @return string
+ * @author sunshine
+ */
+function get_file_ext($file)
+{
+    return substr(strrchr($file, '.'), 1);
+}
+
+
 ?>

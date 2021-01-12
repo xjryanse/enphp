@@ -3,7 +3,7 @@
 
 # EnPHP
 
-![LOGO](https://github.com/djunny/enphp/raw/master/logo.png)
+![LOGO](https://github.com/xjryanse/enphp/raw/master/logo.png)
 
 
 ## 新版加密已上线，欢迎试用
@@ -19,7 +19,7 @@ ENPHP：http://enphp.djunny.com/
 
 ## 项目地址
 
-GITHUB：https://github.com/djunny/enphp
+GITHUB：https://github.com/xjryanse/enphp
 
 GITEE：https://gitee.com/mz/enphp_opensource
 
@@ -35,7 +35,7 @@ GITEE：https://gitee.com/mz/enphp_opensource
 
 ## 加密效果
 
-![LOGO](https://github.com/djunny/enphp/raw/master/encode.png)
+![LOGO](https://github.com/xjryanse/enphp/raw/master/encode.png)
 
 
 ## 使用方法 

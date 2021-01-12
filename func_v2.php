@@ -117,7 +117,7 @@ function strip_whitespace($content, $options = array()) {
         // 移除注释 1=移除 0=保留
         'remove_comment'     => 1,
         // 文件头部增加的注释
-        'comment'            => '-- enphp : https://github.com/djunny/enphp',
+        'comment'            => '-- enphp : https://github.com/xjryanse/enphp',
         // debug
         'debug'              => 1,
         // 重复加密次数，加密次数越多反编译可能性越小，但性能会成倍降低
